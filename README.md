@@ -1,5 +1,7 @@
 
 # ViCA-NeRF: View-Consistency-Aware 3D Editing of Neural Radiance Fields
+<img src="./assets/teaser.png">
+
 This is the official implementation of [VICA-NeRF](https://openreview.net/pdf?id=Pk49a9snPe).
 ## Installation
 ### Install pytorch and NeRFStudio:
