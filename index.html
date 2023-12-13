@@ -137,22 +137,21 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
            <p>
-          Multi-task visual learning is a critical aspect of computer vision. 
-          Current research predominantly concentrates on the multi-task dense prediction setting, 
-          which overlooks the intrinsic 3D world and its multi-view consistent structures, and lacks the 
-          capacity for versatile imagination.
-     </p>
-          <p>
-          To address these limitations, we present a novel problem setting -- multi-task view synthesis (MTVS), 
-          which reinterprets multi-task prediction as a set of novel-view synthesis tasks for multiple scene properties, including RGB.
-     To tackle the MTVS problem, we propose MuvieNeRF, a framework that incorporates both multi-task and cross-view knowledge to simultaneously 
-          synthesize multiple scene properties. \modelname integrates two key modules, the Cross-Task Attention (CTA) and Cross-View Attention (CVA) modules, 
-          enabling the efficient use of information across multiple views and tasks.
-     </p>
-          <p>
-          Extensive evaluations on both synthetic and realistic benchmarks demonstrate that MuvieNeRF is capable of simultaneously 
-          synthesizing different scene properties with promising visual quality, even outperforming conventional discriminative models in various settings. 
-          Notably, we show that MuvieNeRF exhibits universal applicability across a range of NeRF backbones.
+            We introduce ViCA-NeRF, a view-consistency-aware method for 3D editing with
+            text instructions. In addition to the implicit NeRF modeling, our key insight
+            is to exploit two sources of regularization that explicitly propagate the editing
+            information across different views, thus ensuring multi-view consistency. As
+            geometric regularization, we leverage the depth information derived from the
+            NeRF model to establish image correspondence between different views. As
+            learned regularization, we align the latent codes in the 2D diffusion model between
+            edited and unedited images, enabling us to edit key views and propagate the update
+            to the whole scene. Incorporating these two regularizations, our ViCA-NeRF
+            framework consists of two stages. In the initial stage, we blend edits from different
+            views to create a preliminary 3D edit. This is followed by a second stage of NeRF
+            training that is dedicated to further refining the scene’s appearance. Experiments
+            demonstrate that ViCA-NeRF provides more flexible, efficient(3 times faster)
+            editing with higher levels of consistency and details, compared with the state of the
+            art. 
           </p>
         </div>
       </div>
@@ -275,11 +274,12 @@ and Cross-Task Attention (CTA) modules. It predicts multiple scene properties fo
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@inproceedings{zheng2023mtvs,
-  title={Multi-task View Synthesis with Neural Radiance Fields},
-  author={Zheng, Shuhong and Bao, Zhipeng and Hebert, Martial and Wang, Yu-Xiong},
-  booktitle={ICCV},
-  year={2023}
+    <pre><code>@inproceedings{vicanerf2023,
+      author = {Dong, Jiahua and Wang, Yu-Xiong},
+      title = {ViCA-NeRF: View-Consistency-Aware 3D Editing of Neural Radiance Fields},
+      booktitle = {NeurIPS},
+      year = {2023},
+     } 
 }</code></pre>
   </div>
 </section>
