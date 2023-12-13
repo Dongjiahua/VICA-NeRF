@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <title>Multi-task View Synthesis with Neural Radiance Fields</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Multi-task View Synthesis with Neural Radiance Fields</h1>
+          <h4 class="title is-4">ICCV 2023</h4>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://zsh2000.github.io/">Shuhong Zheng</a><sup>1,*</sup>,</span>
+            <span class="author-block">
+              <a href="https://zpbao.github.io/">Zhipeng Bao</a><sup>2,*</sup>,</span>
+            <span class="author-block">
+              <a href="http://www.cs.cmu.edu/~hebert/">Martial Hebert</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://yxw.web.illinois.edu/">Yu-Xiong Wang</a><sup>1</sup>
+            </span>
+  
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Illinois Urbana-Champaign,</span>
+            <span class="author-block"><sup>2</sup>Carnegie Mellon University</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://zsh2000.github.io/mtvs.github.io/static/paper/mtvs.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+
+
+
+              
+<!--               <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+
+
+
+
+              
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/zsh2000/MuvieNeRF"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/demo_video_without_submission_info_AdobeExpress.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        Our MuvieNeRF compared with conventional discriminative multi-task learning method.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+           <p>
+          Multi-task visual learning is a critical aspect of computer vision. 
+          Current research predominantly concentrates on the multi-task dense prediction setting, 
+          which overlooks the intrinsic 3D world and its multi-view consistent structures, and lacks the 
+          capacity for versatile imagination.
+     </p>
+          <p>
+          To address these limitations, we present a novel problem setting -- multi-task view synthesis (MTVS), 
+          which reinterprets multi-task prediction as a set of novel-view synthesis tasks for multiple scene properties, including RGB.
+     To tackle the MTVS problem, we propose MuvieNeRF, a framework that incorporates both multi-task and cross-view knowledge to simultaneously 
+          synthesize multiple scene properties. \modelname integrates two key modules, the Cross-Task Attention (CTA) and Cross-View Attention (CVA) modules, 
+          enabling the efficient use of information across multiple views and tasks.
+     </p>
+          <p>
+          Extensive evaluations on both synthetic and realistic benchmarks demonstrate that MuvieNeRF is capable of simultaneously 
+          synthesizing different scene properties with promising visual quality, even outperforming conventional discriminative models in various settings. 
+          Notably, we show that MuvieNeRF exhibits universal applicability across a range of NeRF backbones.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+<!--     <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="column is-full-width">
+<!--   <div class="container is-max-desktop"> -->
+
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">MuvieNeRF Pipeline</h2>
+        <div class="content has-text-justified">
+        MuvieNeRF is a unified framework for multi-task view synthesis equipped with Cross-View Attention (CVA)
+and Cross-Task Attention (CTA) modules. It predicts multiple scene properties for arbitrary 3D coordinates with nearby-view annotations.
+        <div align="center"><img src="./static/images/pipeline_web.png" alt="" width=90% /></span></div>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+      </div>
+</section>
+
+    <section class="section">
+  <div class="column is-full-width">
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Experimental Results</h2>
+        <div class="content has-text-justified">
+        
+
+          <h3 class="title is-4">Comparison with Baselines</h3>
+        <div class="content has-text-justified">
+          <p>
+            We conduct experiments on two datasets: <a href="https://arxiv.org/abs/1906.05797">Replica</a> and <a href="https://openaccess.thecvf.com/content_ICCV_2017/papers/McCormac_SceneNet_RGB-D_Can_ICCV_2017_paper.pdf">SceneNet RGB-D</a>. 
+            Five tasks beyond RGB are chosen: surface normal prediction (SN), 
+            shading prediction (SH), edge detection (ED), keypoint detection (KP) and semantic label prediction (SL). Baseline methods include the state-of-the-art discriminative model
+            <a href="https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136870506.pdf">InvPT</a>, single-task NeRF model
+            <a href="https://shuaifengzhi.com/Semantic-NeRF/">Semantic-NeRF</a> and naive multi-task NeRF model 
+            <a href="https://openaccess.thecvf.com/content/WACV2023/papers/Zhang_Beyond_RGB_Scene-Property_Synthesis_With_Neural_Radiance_Fields_WACV_2023_paper.pdf">SS-NeRF</a>.
+          </p>
+          
+          <p>
+            Qualitative comparison on Replica dataset:
+          </p>
+        
+          <div align="center"><img src="./static/images/replica.png" alt="" width=85% /></span></div>
+          <p>
+            Qualitative comparison on SceneNet RGB-D dataset:
+          </p>
+          <div align="center"><img src="./static/images/scenenet.png" alt="" width=70% /></span></div>
+        </div>
+
+          <h3 class="title is-4">Out-of-distribution Generalization</h3>
+        <div class="content has-text-justified">
+          <p>
+            The knowledge of multi-task synergy learned during training benefits generalization on out-of-distribution datasets, boosting the performance of 
+            novel view RGB synthesis, even when 2D task signals from input views are unavailable.
+          </p>
+          
+          <p>
+            Four out-of-distribution datasets <a href="http://www.scan-net.org/">ScanNet</a>, 
+            <a href="https://theairlab.org/tartanair-dataset/">TartanAir</a>, 
+            <a href="https://openaccess.thecvf.com/content_CVPR_2020/papers/Yao_BlendedMVS_A_Large-Scale_Dataset_for_Generalized_Multi-View_Stereo_Networks_CVPR_2020_paper.pdf">BlendedMVS</a>, 
+            <a href="https://bmild.github.io/llff/">LLFF</a> (from left to right, top to bottom) are evaluated:
+          </p>
+          <div align="center"><img src="./static/images/ood.png" alt="" width=85% /></span></div>
+        </div>
+<!--         <div class="columns is-vcentered interpolation-panel">
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_start.jpg"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+            <p>Start Frame</p>
+          </div>
+          <div class="column interpolation-video-column">
+            <div id="interpolation-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-slider"
+                   step="1" min="0" max="100" value="0" type="range">
+          </div>
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_end.jpg"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."/>
+            <p class="is-bold">End Frame</p>
+          </div>
+        </div> -->
+
+          
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{zheng2023mtvs,
+  title={Multi-task View Synthesis with Neural Radiance Fields},
+  author={Zheng, Shuhong and Bao, Zhipeng and Hebert, Martial and Wang, Yu-Xiong},
+  booktitle={ICCV},
+  year={2023}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="https://zsh2000.github.io/mtvs.github.io/static/paper/mtvs.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/zsh2000/" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            The website template is borrowed from the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website. Thanks the authors of Nerfies of sharing this great template!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
