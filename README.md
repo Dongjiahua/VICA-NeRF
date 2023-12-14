@@ -53,10 +53,10 @@ Our code is integrated based on the code framework of Instruct-NeRF2NeRF, thanks
 
 ## Citation
 ```
-@inproceedings{vicanerf2023,
- author = {Dong, Jiahua and Wang, Yu-Xiong},
- title = {ViCA-NeRF: View-Consistency-Aware 3D Editing of Neural Radiance Fields},
- booktitle = {NeurIPS},
- year = {2023},
-} 
+@inproceedings{dong2023vica,
+  title={ViCA-NeRF: View-Consistency-Aware 3D Editing of Neural Radiance Fields},
+  author={Dong, Jiahua and Wang, Yu-Xiong},
+  booktitle={Thirty-seventh Conference on Neural Information Processing Systems},
+  year={2023}
+}
 ```
