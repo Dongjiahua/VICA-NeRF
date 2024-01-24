@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  
+
   <title>ViCA-NeRF: View-Consistency-Aware 3D Editing of Neural Radiance Fields</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -18,17 +19,15 @@
     gtag('config', 'G-PYVRSFMDRL');
   </script>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  
+
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -36,48 +35,50 @@
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
 </head>
+
 <body>
 
 
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">ViCA-NeRF: View-Consistency-Aware 3D Editing of Neural Radiance Fields</h1>
-          <h4 class="title is-4">Neurips 2023</h4>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a >Jiahua Dong</a>,</span>
-            <span class="author-block">
-              <a href="https://yxw.web.illinois.edu/">Yu-Xiong Wang</a>
-            </span>
-  
-          </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">University of Illinois Urbana-Champaign</span>
-          </div>
-
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
           <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://openreview.net/pdf?id=Pk49a9snPe"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
+            <h1 class="title is-1 publication-title">ViCA-NeRF: View-Consistency-Aware 3D Editing of Neural Radiance
+              Fields</h1>
+            <h4 class="title is-4">Neurips 2023</h4>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a>Jiahua Dong</a>,</span>
+              <span class="author-block">
+                <a href="https://yxw.web.illinois.edu/">Yu-Xiong Wang</a>
               </span>
 
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">University of Illinois Urbana-Champaign</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="https://openreview.net/pdf?id=Pk49a9snPe"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
 
 
 
-              
-<!--               <span class="link-block">
+
+
+                <!--               <span class="link-block">
                 <a href="https://arxiv.org/abs/2011.12948"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
@@ -91,29 +92,29 @@
 
 
 
-              
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/Dongjiahua/VICA-NeRF"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
-              </span>
-              <!-- Dataset Link. -->
-              
-            </div>
 
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/Dongjiahua/VICA-NeRF"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- Dataset Link. -->
+
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- <section class="hero teaser">
+  <!-- <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
       <video id="teaser" autoplay muted loop playsinline height="100%">
@@ -129,37 +130,37 @@
 
 
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-           <p>
-            We introduce ViCA-NeRF, a view-consistency-aware method for 3D editing with
-            text instructions. In addition to the implicit NeRF modeling, our key insight
-            is to exploit two sources of regularization that explicitly propagate the editing
-            information across different views, thus ensuring multi-view consistency. As
-            geometric regularization, we leverage the depth information derived from the
-            NeRF model to establish image correspondence between different views. As
-            learned regularization, we align the latent codes in the 2D diffusion model between
-            edited and unedited images, enabling us to edit key views and propagate the update
-            to the whole scene. Incorporating these two regularizations, our ViCA-NeRF
-            framework consists of two stages. In the initial stage, we blend edits from different
-            views to create a preliminary 3D edit. This is followed by a second stage of NeRF
-            training that is dedicated to further refining the scene’s appearance. Experiments
-            demonstrate that ViCA-NeRF provides more flexible, efficient(3 times faster)
-            editing with higher levels of consistency and details, compared with the state of the
-            art. 
-          </p>
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              We introduce ViCA-NeRF, a view-consistency-aware method for 3D editing with
+              text instructions. In addition to the implicit NeRF modeling, our key insight
+              is to exploit two sources of regularization that explicitly propagate the editing
+              information across different views, thus ensuring multi-view consistency. As
+              geometric regularization, we leverage the depth information derived from the
+              NeRF model to establish image correspondence between different views. As
+              learned regularization, we align the latent codes in the 2D diffusion model between
+              edited and unedited images, enabling us to edit key views and propagate the update
+              to the whole scene. Incorporating these two regularizations, our ViCA-NeRF
+              framework consists of two stages. In the initial stage, we blend edits from different
+              views to create a preliminary 3D edit. This is followed by a second stage of NeRF
+              training that is dedicated to further refining the scene’s appearance. Experiments
+              demonstrate that ViCA-NeRF provides more flexible, efficient(3 times faster)
+              editing with higher levels of consistency and details, compared with the state of the
+              art.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-    <!--/ Abstract. -->
+      <!--/ Abstract. -->
 
-    <!-- Paper video. -->
-<!--     <div class="columns is-centered has-text-centered">
+      <!-- Paper video. -->
+      <!--     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Video</h2>
         <div class="publication-video">
@@ -168,35 +169,80 @@
         </div>
       </div>
     </div> -->
-    <!--/ Paper video. -->
-  </div>
-</section>
+      <!--/ Paper video. -->
+    </div>
 
-
-
-<!-- <section class="section">
+  </section>
+  <!-- <section class="section">
   <div class="column is-full-width">
 <!--   <div class="container is-max-desktop"> -->
 
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">MuvieNeRF Pipeline</h2>
-        <div class="content has-text-justified">
-        MuvieNeRF is a unified framework for multi-task view synthesis equipped with Cross-View Attention (CVA)
-and Cross-Task Attention (CTA) modules. It predicts multiple scene properties for arbitrary 3D coordinates with nearby-view annotations.
+  <!-- Abstract. -->
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-3">ViCA-NeRF Pipeline</h2>
+      <div class="content has-text-justified">
+        ViCA-NeRF is an efficient, controllable NeRF editing pipeline which can edit 3D scenes with text instructions.
+        It shows better generalizability for various text instructions
         <div align="center"><img src="./static/images/new_pip.png" alt="" width=90% /></span></div>
-        </div>
       </div>
     </div>
-    <!--/ Abstract. -->
-      </div>
-</section>
+  </div>
+  <!--/ Abstract. -->
+  </div>
+  </section>
 
-    <section class="section">
-  <div class="column is-full-width"> -->
-    <!-- Paper video. -->
-    <!-- <div class="columns is-centered has-text-centered">
+  <section class="section">
+    <div class="column is-full-width">
+      <!-- Animation. -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Early control from 2D to 3D</h2>
+
+          <!-- Interpolating. -->
+          <h3 class="title is-4">Interpolating states</h3>
+          <div class="content has-text-justified">
+            <p>
+              We can also animate the scene by interpolating the deformation latent codes of two input
+              frames. Use the slider here to linearly interpolate between the left frame and the right
+              frame.
+            </p>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+            <div class="column is-3 has-text-centered">
+              <img src="./static/images/link1.png" class="interpolation-image"
+                alt="Interpolate start reference image." />
+              <p>Start Frame</p>
+            </div>
+            <div class="column interpolation-video-column">
+              <video id="link1" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_link_ours_2.mp4"
+                        type="video/mp4">
+              </video>
+              <!-- <p class="is-bold"></p> -->
+            </div>
+            <div class="column is-3 has-text-centered">
+              <img src="./static/images/link2.png" class="interpolation-image"
+                alt="Interpolation end reference image." />
+              <p class="is-bold">End Frame</p>
+            </div>
+            <div class="column interpolation-video-column">
+              <video id="link2" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/new_link_ours_2.mp4"
+                        type="video/mp4">
+              </video>
+              <!-- <p class="is-bold"></p> -->
+            </div>
+
+          </div>
+          <br />
+          <!--/ Interpolating. -->
+
+        </div>
+      </div>
+      <!--/ Animation. -->
+      <!-- Paper video. -->
+      <!-- <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Experimental Results</h2>
         <div class="content has-text-justified">
@@ -239,7 +285,7 @@ and Cross-Task Attention (CTA) modules. It predicts multiple scene properties fo
           </p>
           <div align="center"><img src="./static/images/ood.png" alt="" width=85% /></span></div>
         </div> -->
-<!--         <div class="columns is-vcentered interpolation-panel">
+      <!--         <div class="columns is-vcentered interpolation-panel">
           <div class="column is-3 has-text-centered">
             <img src="./static/images/interpolate_start.jpg"
                  class="interpolation-image"
@@ -262,57 +308,57 @@ and Cross-Task Attention (CTA) modules. It predicts multiple scene properties fo
           </div>
         </div> -->
 
-          
-        </div>
-      </div>
+
+    </div>
+    </div>
     </div>
     <!--/ Paper video. -->
-  </div>
-</section>
+    </div>
+  </section>
 
 
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@inproceedings{vicanerf2023,
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@inproceedings{vicanerf2023,
       author = {Dong, Jiahua and Wang, Yu-Xiong},
       title = {ViCA-NeRF: View-Consistency-Aware 3D Editing of Neural Radiance Fields},
       booktitle = {NeurIPS},
       year = {2023},
      } 
 }</code></pre>
-  </div>
-</section>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="https://zsh2000.github.io/mtvs.github.io/static/paper/mtvs.pdf">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/zsh2000/" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
     </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            The website template is borrowed from the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website. Thanks the authors of Nerfies of sharing this great template!
-          </p>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="https://zsh2000.github.io/mtvs.github.io/static/paper/mtvs.pdf">
+          <i class="fas fa-file-pdf"></i>
+        </a>
+        <a class="icon-link" href="https://github.com/zsh2000/" class="external-link" disabled>
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+            <p>
+              The website template is borrowed from the <a href="https://github.com/nerfies/nerfies.github.io">source
+                code</a> of this website. Thanks the authors of Nerfies of sharing this great template!
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
 </body>
+
 </html>
