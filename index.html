@@ -129,39 +129,18 @@
 </section> -->
 
 
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="s1" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/new_face.mp4"
-                    type="video/mp4">
-          </video>
 
-        </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/new_face.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/new_face.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
 
 
   <section class="section">
     <div class="container is-max-desktop">
       <!-- Abstract. -->
+    </div>
+    <div class="column interpolation-video-column">
+      <video id="link1" autoplay muted loop playsinline>
+        <source src="./static/videos/teaser.mp4" type="video/mp4">
+      </video>
+    </div>
       <div class="columns is-centered has-text-centered">
         <div class="column is-full-width">
           <h2 class="title is-3">Abstract</h2>
@@ -210,9 +189,9 @@
           <h2 class="title is-3">ViCA-NeRF Pipeline</h2>
           <div class="content has-text-justified">
             <p>
-            ViCA-NeRF is an efficient, controllable NeRF editing pipeline which can edit 3D scenes with text
-            instructions.
-            It shows better generalizability for various text instructions.</p>
+              ViCA-NeRF is an efficient, controllable NeRF editing pipeline which can edit 3D scenes with text
+              instructions.
+              It shows better generalizability for various text instructions.</p>
             <div class="paragraph">
               <p>
                 ViCA-NeRF leverages two sources of regularization to propagate editing information
@@ -246,7 +225,8 @@
       <div class="columns is-centered">
         <div class="column is-full-width">
           <h2 class="title is-3">Early Control from 2D to 3D</h2>
-          ViCA-NeRF can edit the 3D scene with selected key view edits, thus abling to choose the final result before NeRF training.
+          ViCA-NeRF can edit the 3D scene with selected key view edits, thus abling to choose the final result before
+          NeRF training.
           <div class="columns is-vcentered interpolation-panel">
             <div class="column is-3 has-text-centered">
               <img src="./static/images/link1.png" class="interpolation-image" height="80%"
@@ -268,7 +248,7 @@
                 <source src="./static/videos/new_link_ours_2.mp4" type="video/mp4">
               </video>
             </div>
-            
+
             <br />
             <!--/ Interpolating. -->
 
@@ -276,7 +256,7 @@
         </div>
       </div>
 
-        <!-- <div class="columns is-centered">
+      <!-- <div class="columns is-centered">
         <div class="column is-full-width">
           <h3 class="title is-4">Direct Dataset modification</h3>
           <div class="columns is-vcentered interpolation-panel">
@@ -294,31 +274,32 @@
       <div class="columns is-centered">
         <div class="column is-full-width">
           <h2 class="title is-3">Local Editing</h2>
-          ViCA-NeRF can generate 3D mask for local editing. The user need to click and generate a mask on one view. ViCA-NeRF will propage this to other views and only modify the chosen object.
+          ViCA-NeRF can generate 3D mask for local editing. The user need to click and generate a mask on one view.
+          ViCA-NeRF will propage this to other views and only modify the chosen object.
           <div class="column interpolation-video-column">
             <img src="./static/images/local_web.png" class="interpolation-image" height="100%"
-            alt="Interpolation end reference image." />
+              alt="Interpolation end reference image." />
           </div>
           <br />
         </div>
       </div>
 
-        <div class="columns is-centered">
-          <div class="column is-full-width">
-            <h2 class="title is-3">NeRF-Art results</h2>
-            <div class="column interpolation-video-column">
-              <video id="link2" autoplay muted loop playsinline height="100%">
-                <source src="./static/videos/nerfart.mp4" type="video/mp4">
-              </video>
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">NeRF-Art results</h2>
+          <div class="column interpolation-video-column">
+            <video id="link2" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/nerfart.mp4" type="video/mp4">
+            </video>
 
-            </div>
-            <br />
           </div>
+          <br />
         </div>
+      </div>
 
-        <!--/ Animation. -->
-        <!-- Paper video. -->
-        <!-- <div class="columns is-centered has-text-centered">
+      <!--/ Animation. -->
+      <!-- Paper video. -->
+      <!-- <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Experimental Results</h2>
         <div class="content has-text-justified">
@@ -361,7 +342,7 @@
           </p>
           <div align="center"><img src="./static/images/ood.png" alt="" width=85% /></span></div>
         </div> -->
-        <!--         <div class="columns is-vcentered interpolation-panel">
+      <!--         <div class="columns is-vcentered interpolation-panel">
           <div class="column is-3 has-text-centered">
             <img src="./static/images/interpolate_start.jpg"
                  class="interpolation-image"
@@ -385,7 +366,7 @@
         </div> -->
 
 
-      </div>
+    </div>
     </div>
     </div>
     <!--/ Paper video. -->
