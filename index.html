@@ -217,7 +217,7 @@
       <div class="columns is-centered">
         <div class="column is-full-width">
           <h2 class="title is-3">Early Control from 2D to 3D</h2>
-
+          ViCA-NeRF can edit the 3D scene with selected key view edits, thus abling to choose the final result before NeRF training.
           <div class="columns is-vcentered interpolation-panel">
             <div class="column is-3 has-text-centered">
               <img src="./static/images/link1.png" class="interpolation-image" height="80%"
@@ -262,13 +262,25 @@
         </div>
       </div> -->
 
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Local Editing</h2>
+          ViCA-NeRF can generate 3D mask for local editing. The user need to click and generate a mask on one view. ViCA-NeRF will propage this to other views and only modify the chosen object.
+          <div class="column interpolation-video-column">
+            <video id="link2" autoplay muted loop playsinline height="100%">
+              <source src="./static/images/local_web.png" type="video/mp4">
+            </video>
+          </div>
+          <br />
+        </div>
+      </div>
+
         <div class="columns is-centered">
           <div class="column is-full-width">
-            <h2 class="title is-3">Qualatitive results</h2>
+            <h2 class="title is-3">NeRF-Art results</h2>
             <div class="column interpolation-video-column">
-              <video id="link2" autoplay muted loop playsinline height="100%">
-                <source src="./static/videos/nerfart.mp4" type="video/mp4">
-              </video>
+              <img src="./static/images/local_web.png" class="interpolation-image" height="100%"
+                alt="Interpolation end reference image." />
             </div>
             <br />
           </div>
