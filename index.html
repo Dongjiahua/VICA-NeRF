@@ -183,7 +183,19 @@
             ViCA-NeRF is an efficient, controllable NeRF editing pipeline which can edit 3D scenes with text
             instructions.
             It shows better generalizability for various text instructions
+            <div class="paragraph">
+              <p>
+                ViCA-NeRF leverages two sources of regularization to propagate editing information
+              <ol>
+                <li>Edit key views through Instruct-Pix2Pix, extract the depth.</li>
+                <li>Project edited key views to other views using depth.</li>
+                <li>Further refine images through a blending module .</li>
+                <li>Train NeRF with the updated dataset.</li>
+              </ol>
+              </p>
+            </div>
             <div align="center"><img src="./static/images/new_pip.png" alt="" width=100% /></span></div>
+
           </div>
         </div>
       </div>
