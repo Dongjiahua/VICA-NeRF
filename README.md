@@ -3,6 +3,7 @@
 <img src="./assets/teaser.png">
 
 This is the official implementation of [VICA-NeRF](https://openreview.net/pdf?id=Pk49a9snPe).
+[Project-Page](https://dongjiahua.github.io/VICA-NeRF/)
 ## Installation
 ### Install pytorch and NeRFStudio:
 **Recommented:** Follow the instructions on the [NeRFStudio](https://docs.nerf.studio/en/latest/quickstart/installation.html#dependencies).
