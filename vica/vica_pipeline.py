@@ -63,6 +63,8 @@ class VICAPipelineConfig(VanillaPipelineConfig):
     control: bool = False
     warm_up_iters: int = -1
     post_refine: bool = False
+    vis_name: str = "default"
+    seed: int = 0
 
 class VICAPipeline(VanillaPipeline):
     """VICA pipeline"""
@@ -92,12 +94,18 @@ class VICAPipeline(VanillaPipeline):
         self.text_embedding = self.ip2p.pipe._encode_prompt(
             self.config.prompt, device=self.ip2p_device, num_images_per_prompt=1, do_classifier_free_guidance=True, negative_prompt=""
         )
-        self.auto_thres = 0
-        self.edit_thres = 0.7
+        self.auto_thres = 0.5
+        self.edit_thres = 0.9
         self.seg = False
         if self.config.warm_up_iters==-1:
             self.warm_up_iters = int(self.datamanager.image_batch['image'].shape[0]**(1/2))
+        else:
+            self.warm_up_iters = self.config.warm_up_iters
 
+
+        # seed everything
+        torch.manual_seed(self.config.seed)
+        
     def seg_update(self, image1, image2, idx, p=""):
         if not self.seg:
             return image2.squeeze()
@@ -337,7 +345,7 @@ class VICAPipeline(VanillaPipeline):
             ref_image = edited_image.squeeze().permute(1,2,0).detach()
             
             for i in tqdm(range(0,self.datamanager.image_batch['image'].shape[0])): 
-                image, mask = self.cal_warpped_img(chosen_idx,i,ref_image, thres=0.01)
+                image, mask = self.cal_warpped_img(chosen_idx,i,ref_image)
                 image = image.detach().cpu() * (1-rate)+self.datamanager.image_batch["image"][i] * rate 
 
                 self.datamanager.image_batch["image"][i] = self.seg_update(image.cuda(),image,i)
@@ -347,6 +355,7 @@ class VICAPipeline(VanillaPipeline):
     def edit_one_frame(self,chosen_idx, step, masked=0):
         agree = "0"
         while agree!="1":
+            vis_mask = (self.datamanager.mask[chosen_idx].cpu().numpy()*255).astype(np.uint8)
             edited_image,rendered_image, current_index = self.get_edit_image(chosen_idx,mask_edit=False,use_image=True,lower_bound=self.config.lower_bound,upper_bound=self.config.upper_bound,diffusion_steps=10)
             ref_image = edited_image.squeeze().permute(1,2,0).detach()
             if not self.config.control:
@@ -357,7 +366,13 @@ class VICAPipeline(VanillaPipeline):
             if masked>self.auto_thres:
                 agree = "1"
             else:
-                plt.imshow((new_img.cpu().numpy()*255).astype(np.uint8))
+                # show the image and mask
+                vis_image = (new_img.cpu().numpy()*255).astype(np.uint8)
+
+                ax = plt.subplot(1, 2, 1)
+                ax.imshow(vis_image)
+                ax = plt.subplot(1, 2, 2)
+                ax.imshow(vis_mask, cmap='gray')
                 plt.show()
                 agree = input(f"Disagree[0],  Agree[1],  Reset[2]: ").strip()
                 if agree == "2":
@@ -369,7 +384,7 @@ class VICAPipeline(VanillaPipeline):
 
         for i in tqdm(range(0,self.datamanager.image_batch['image'].shape[0])): 
 
-            image, mask = self.cal_warpped_img(chosen_idx,i,ref_image, 0.01)
+            image, mask = self.cal_warpped_img(chosen_idx,i,ref_image)
             
             self.datamanager.image_batch["image"][i] = self.seg_update(self.datamanager.image_batch["image"][i].cuda(),image,i)
             mask_percent[i] = mask.sum()/mask.numel()
@@ -388,15 +403,17 @@ class VICAPipeline(VanillaPipeline):
             chosen_idx,masked = self.get_key_frame()
             self.chosed.append(chosen_idx)
         self.new_images = []
+
         for k in tqdm(range(self.datamanager.image_batch['image'].shape[0])):
             image=self.get_inpaint_image(k,self.datamanager.image_batch["image"][k])
-
+            
             self.datamanager.original_image_batch["image"][k]=self.datamanager.image_batch["image"][k]
             self.new_images.append(image.detach().cpu())
             self.datamanager.image_batch["image"][k] = self.old_img[k].cuda().squeeze().permute(1,2,0)
             self.datamanager.image_batch["image"][k] = image
+            
 
-
+   
     def get_train_loss_dict(self, step: int):
         """This function gets your training loss dict and performs image editing.
         Args:
