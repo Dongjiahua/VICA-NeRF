@@ -6,18 +6,17 @@ This is the official implementation of [VICA-NeRF](https://openreview.net/pdf?id
 
 [Project-Page](https://dongjiahua.github.io/VICA-NeRF/)
 ## Installation
-### Install pytorch and NeRFStudio:
+### Install pytorch and NeRFStudio (1.0.0):
 **Recommented:** Follow the instructions on the [NeRFStudio](https://docs.nerf.studio/en/latest/quickstart/installation.html#dependencies).
 
 **Directly install:**
 ```
 conda create --name vica -y python=3.8 -y
-conda activate vica -y
-python -m pip install --upgrade pip
+conda activate vica
 
 pip install torch==2.0.1+cu118 torchvision==0.15.2+cu118 --extra-index-url https://download.pytorch.org/whl/cu118 
 pip install ninja git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
-pip install nerfstudio torchtyping
+pip install nerfstudio==1.0.0 torchtyping
 ```
 
 ### Install VICA-NeRF
