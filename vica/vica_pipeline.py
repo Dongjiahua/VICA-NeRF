@@ -334,6 +334,7 @@ class VICAPipeline(VanillaPipeline):
         for k in noise_ord:
             if k not in key_frames:
                 return int(k),noise_sum.min()
+        return None,1
         
         
     @torch.no_grad()
