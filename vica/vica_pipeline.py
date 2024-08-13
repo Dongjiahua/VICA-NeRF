@@ -97,7 +97,7 @@ class VICAPipeline(VanillaPipeline):
         self.auto_thres = 0.5
         self.edit_thres = 0.9
         self.seg = False
-        if self.config.warm_up_iters==-1:
+        if self.config.warm_up_iters==-1 and test_mode != "inference":  # when using rendering script
             self.warm_up_iters = int(self.datamanager.image_batch['image'].shape[0]**(1/2))
         else:
             self.warm_up_iters = self.config.warm_up_iters
@@ -334,6 +334,7 @@ class VICAPipeline(VanillaPipeline):
         for k in noise_ord:
             if k not in key_frames:
                 return int(k),noise_sum.min()
+        return None,1
         
         
     @torch.no_grad()
