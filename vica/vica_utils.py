@@ -3,13 +3,9 @@ from torchtyping import TensorType
 import nerfstudio.utils.poses as pose_utils
 from enum import Enum, auto
 from nerfstudio.cameras import camera_utils
+from nerfstudio.cameras.cameras import CameraType
 
-class CameraType(Enum):
-    """Supported camera types."""
 
-    PERSPECTIVE = auto()
-    FISHEYE = auto()
-    EQUIRECTANGULAR = auto()
 
 def radial_and_tangential_distort(coords, distortion_params):
     """
@@ -43,7 +39,7 @@ def generate_coords_from_directions(
     directions,
     camera_opt_to_camera
     ):
-        
+    # print(ref_camera.camera_type, ref_camera.distortion_params)
     true_indices = [camera_indices[..., i] for i in range(camera_indices.shape[-1])]
     num_rays_shape = camera_indices.shape[:-1]
     cam_types = torch.unique(ref_camera.camera_type, sorted=False)
@@ -65,39 +61,10 @@ def generate_coords_from_directions(
         directions = directions/(directions[...,2]/(-1))[...,None]
         coords  = torch.zeros(*directions.shape[:-1],2, device=directions.device)
         coords[..., 0] =  directions[...,0]
-        coords[..., 1] = directions[...,1]
-    elif  CameraType.EQUIRECTANGULAR.value in cam_types:
-        raise NotImplementedError(f"Camera type not implemented:{cam_types}")
-    elif CameraType.FISHEYE.value in cam_types:            
-        coords  = torch.zeros(*directions.shape[:-1],2, device=directions.device)
-        directions/=torch.linalg.vector_norm(directions, dim=-1, keepdims=True)
-        theta = torch.acos(-directions[..., 2])
-        
-        sin_theta = torch.sin(theta)
-        coords[..., 0] = directions[..., 0] * theta / sin_theta
-        coords[..., 1] = directions[..., 1] * theta / sin_theta
-        
-        # print(coords)
+        coords[..., 1] = directions[...,1]     
     else:
         # print(CameraType.EQUIRECTANGULAR.value)
-        raise NotImplementedError(f"Camera type not implemented:{cam_types}")
-
-    
-    distortion_params = None
-    distortion_params_delta=None
-    if ref_camera.distortion_params is not None:
-        distortion_params = ref_camera.distortion_params.unsqueeze(0)
-        if distortion_params_delta is not None:
-            distortion_params = distortion_params + distortion_params_delta
-    elif distortion_params_delta is not None:
-        distortion_params = distortion_params_delta
-    
-    # Do not apply distortion for equirectangular images
-    if distortion_params is not None and CameraType.EQUIRECTANGULAR.value not in cam_types:
-        coords = radial_and_tangential_distort(
-                    coords.reshape(1, -1, 2),
-                    distortion_params,
-                ).reshape(coords.shape)
+        raise NotImplementedError(f"Camera should be set as PERSPECTIVE, not{cam_types}")
     
     fx, fy = ref_camera.fx[true_indices].squeeze(-1), ref_camera.fy[true_indices].squeeze(-1)  # (num_rays,)
     cx, cy = ref_camera.cx[true_indices].squeeze(-1), ref_camera.cy[true_indices].squeeze(-1)  # (num_rays,)

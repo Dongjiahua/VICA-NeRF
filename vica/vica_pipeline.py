@@ -34,6 +34,7 @@ import open3d as o3d
 from vica.ip2p import InstructPix2Pix
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+from nerfstudio.cameras.cameras import CameraType
 
 @dataclass
 class VICAPipelineConfig(VanillaPipelineConfig):
@@ -98,7 +99,7 @@ class VICAPipeline(VanillaPipeline):
         self.edit_thres = 0.9
         self.seg = False
         if self.config.warm_up_iters==-1 and test_mode != "inference":  # when using rendering script
-            self.warm_up_iters = int(self.datamanager.image_batch['image'].shape[0]**(1/2))
+            self.warm_up_iters = int(self.datamanager.image_batch['image'].shape[0]//10)
         else:
             self.warm_up_iters = self.config.warm_up_iters
 
@@ -112,7 +113,7 @@ class VICAPipeline(VanillaPipeline):
         if p!="blending":
             return image2.squeeze()
         else:
-            image1 = self.old_img[idx].cuda()
+            image1 = self.datamanager.original_image_batch["image"][idx].cuda()
         if image1.shape[0]==3:
             image1 = image1.unsqueeze(0)
         if image2.shape[0]==3:
@@ -126,7 +127,7 @@ class VICAPipeline(VanillaPipeline):
         final_image = image1*(1-seg_mask) + image2*seg_mask
         return final_image.squeeze()   
 
-    def get_reprojection_error(self, forward_grid, backward_grid, curr_grid, thres=1):
+    def get_reprojection_error(self, forward_grid, backward_grid, curr_grid, thres=0.01):
         forward_grid = forward_grid.squeeze() # H x W x 2
         backward_grid = backward_grid.squeeze()
         H,W = forward_grid.shape[:2]
@@ -147,7 +148,7 @@ class VICAPipeline(VanillaPipeline):
         curr_grid[...,0] = curr_grid[...,0]/(W)*2-1
         curr_grid[...,1] = curr_grid[...,1]/(H)*2-1
         
-        re_proj_grid = F.grid_sample(backward_grid[None,...].permute(0,3,1,2),forward_grid[None,...],mode="nearest",padding_mode="zeros").squeeze().permute(1,2,0)
+        re_proj_grid = F.grid_sample(backward_grid[None,...].permute(0,3,1,2),forward_grid[None,...],mode="nearest",padding_mode="zeros", align_corners=False).squeeze().permute(1,2,0)
         
         error = torch.norm(re_proj_grid - curr_grid.cuda(), dim=-1)
 
@@ -276,7 +277,7 @@ class VICAPipeline(VanillaPipeline):
 
         return edited_image.permute(0, 2, 3, 1).squeeze(0)
     
-    def get_edit_image(self,current_spot,render=False,image=None, mask_edit=False,diffusion_steps=10, lower_bound=0.02, upper_bound=0.98, use_image=False, old=False):
+    def get_edit_image(self,current_spot,render=False,image=None, mask_edit=False,diffusion_steps=10, lower_bound=0.02, upper_bound=0.98, use_image=False):
 
         # get original image from dataset
         original_image = self.datamanager.original_image_batch["image"][current_spot].to(self.device)
@@ -297,9 +298,6 @@ class VICAPipeline(VanillaPipeline):
             image = self.datamanager.image_batch["image"][current_spot].to(self.device)
         if image is not None:
             rendered_image=image.unsqueeze(dim=0).permute(0, 3, 1, 2).to(self.ip2p_device)
-        
-     
-        original_image = self.old_img[current_spot].cuda() if old==True else original_image
 
         edited_image = self.ip2p.edit_image(
                     self.text_embedding.to(self.ip2p_device),
@@ -340,12 +338,12 @@ class VICAPipeline(VanillaPipeline):
     @torch.no_grad()
     def warm_up(self):
         rate = 0
-        for _ in tqdm(range(self.warm_up_iters)):
+        for _ in tqdm(range(self.warm_up_iters), desc="Warm up the dataset"):
             chosen_idx = np.random.randint(0,self.datamanager.mask.shape[0])
             edited_image,rendered_image, current_index = self.get_edit_image(chosen_idx,mask_edit=False,use_image=True,lower_bound=self.config.lower_bound,upper_bound=self.config.upper_bound,diffusion_steps=10)
             ref_image = edited_image.squeeze().permute(1,2,0).detach()
             
-            for i in tqdm(range(0,self.datamanager.image_batch['image'].shape[0])): 
+            for i in (range(0,self.datamanager.image_batch['image'].shape[0])): 
                 image, mask = self.cal_warpped_img(chosen_idx,i,ref_image)
                 image = image.detach().cpu() * (1-rate)+self.datamanager.image_batch["image"][i] * rate 
 
@@ -383,7 +381,7 @@ class VICAPipeline(VanillaPipeline):
         mask_percent = torch.zeros(self.datamanager.image_batch['image'].shape[0]).cuda()
         mask_percent[chosen_idx] = 1
 
-        for i in tqdm(range(0,self.datamanager.image_batch['image'].shape[0])): 
+        for i in range(0,self.datamanager.image_batch['image'].shape[0]): 
 
             image, mask = self.cal_warpped_img(chosen_idx,i,ref_image)
             
@@ -399,18 +397,18 @@ class VICAPipeline(VanillaPipeline):
         self.chosed=[]
         self.chosed.append(chosen_idx)
         masked = 0
+        print("Start key frame editing", end="")
         while chosen_idx is not None:
             self.edit_one_frame(chosen_idx,step,masked)
             chosen_idx,masked = self.get_key_frame()
             self.chosed.append(chosen_idx)
         self.new_images = []
-
-        for k in tqdm(range(self.datamanager.image_batch['image'].shape[0])):
+        print("  Done!")
+        for k in tqdm(range(self.datamanager.image_batch['image'].shape[0]), desc="Blending images"):
             image=self.get_inpaint_image(k,self.datamanager.image_batch["image"][k])
             
             self.datamanager.original_image_batch["image"][k]=self.datamanager.image_batch["image"][k]
             self.new_images.append(image.detach().cpu())
-            self.datamanager.image_batch["image"][k] = self.old_img[k].cuda().squeeze().permute(1,2,0)
             self.datamanager.image_batch["image"][k] = image
             
 
@@ -420,25 +418,28 @@ class VICAPipeline(VanillaPipeline):
         Args:
             step: current iteration step to update sampler if using DDP (distributed)
         """
-
-        ray_bundle, batch = self.datamanager.next_train(step)
-
-        model_outputs = self.model(ray_bundle)
-        metrics_dict = self.model.get_metrics_dict(model_outputs, batch)
-
         if self.config.first_run:   
             with torch.no_grad():
                 self.config.first_run=False
+                # update the cameras to no distortion and perspective
+                for i in range(len(self.datamanager.train_dataparser_outputs.cameras)):
+                    self.datamanager.train_dataparser_outputs.cameras[i].distortion_params = None
+                    self.datamanager.train_dataparser_outputs.cameras[i].camera_type = CameraType.PERSPECTIVE
+
+                
                 self.inverse_index = torch.zeros_like(self.datamanager.original_image_batch["image_idx"])    
                 for i in range(self.datamanager.original_image_batch["image_idx"].shape[0]):
                     self.inverse_index[self.datamanager.original_image_batch["image_idx"][i]] = i  
-                self.old_img = []
+                    
+
                 self.depth = torch.zeros(self.datamanager.image_batch['image'].shape[0],  *self.datamanager.image_batch['image'].shape[1:3])
                 self.train_indices_order = cycle(range(self.datamanager.original_image_batch["image_idx"].shape[0]))
                 
-                for i in tqdm(range(self.datamanager.image_batch['image'].shape[0])):
+                
+                for i in tqdm(range(self.datamanager.image_batch['image'].shape[0]), desc="Rendering Depth"):
                     depth,render = self.get_render_image(i)
-                    self.old_img.append(render.detach().cpu())
+                    self.datamanager.image_batch["image"][i] = render.squeeze().permute(1,2,0)
+                    self.datamanager.original_image_batch["image"][i] = render.squeeze().permute(1,2,0)
                     self.depth[i] = depth.detach().squeeze()
                 self.inverse_index = self.inverse_index.cuda()
                 self.warm_up()
@@ -449,6 +450,11 @@ class VICAPipeline(VanillaPipeline):
             for k in tqdm(range(self.datamanager.image_batch['image'].shape[0])):
                 self.datamanager.image_batch["image"][k]=self.get_inpaint_image(k,None)
 
+        ray_bundle, batch = self.datamanager.next_train(step)
+
+        model_outputs = self.model(ray_bundle)
+        metrics_dict = self.model.get_metrics_dict(model_outputs, batch)
+        
         loss_dict = self.model.get_loss_dict(model_outputs, batch, metrics_dict)
 
         return model_outputs, loss_dict, metrics_dict
